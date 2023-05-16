@@ -11,6 +11,7 @@ import com.example.demo.dto.LoginUserDetails;
 import com.example.demo.entity.LoginUser;
 import com.example.demo.repository.LoginUserRepository;
 
+/**  */
 @Service
 public class LoginUserDetailsService implements UserDetailsService{
 	

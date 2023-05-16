@@ -15,7 +15,7 @@ import com.example.demo.repository.RoleRepository;
 
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class UserService extends AppInitializer{
+public class UserService {
 	/**
 	 * ユーザー情報　Repository
 	 * */

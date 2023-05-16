@@ -25,8 +25,6 @@ public class BusinessRequest {
 	/**
 	 * 名刺画像情報
 	 * */
-	@NotEmpty(message = "画像情報を入力してください")
-	@Size(max = 100, message = "画像情報は100桁以内で入力してください")
 	private String card_image;
 	
 	/**

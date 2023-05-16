@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.dto.BusinessRequest;
 import com.example.demo.entity.BusinessCard;
@@ -26,8 +27,7 @@ public class BusinessController {
 	 * */
 	@Autowired
 	private BusinessService businessService;
-	
-	
+
 	/**
 	 * 名刺情報一覧画面を表示
 	 * @param model Model
@@ -35,9 +35,9 @@ public class BusinessController {
 	 * */
 	@GetMapping(value = "/businesscard/list")
 	public String getUserByEmail(Model model) {
-		List<BusinessCard> user =  businessService.getByEmail();
+		List<BusinessCard> user = businessService.getByEmail();
 		model.addAttribute("businesscardlist", user);
-	    return "businesscard/list";
+		return "businesscard/list";
 	}
 
 	/**
@@ -47,22 +47,22 @@ public class BusinessController {
 	 * */
 	@GetMapping(value = "/businesscard/create")
 	public String displayAdd(Model model) {
-		model.addAttribute("businesscardRequest", new BusinessRequest());
+		model.addAttribute("businessRequest", new BusinessRequest());
 		return "businesscard/create";
 	}
 
 	/**
-	 * ユーザー登録変更画面
+	 * ユーザー登録変更画面表示
 	 * @param model Model
 	 * @return ユーザー情報変更画面
 	 * */
 	@GetMapping(value = "/businesscard/update")
 	public String displayUpdate(@RequestParam("id") String updateId, Model model) {
 		model.addAttribute("updateId", updateId);
-		model.addAttribute("businesscardRequest", new BusinessRequest());
+		model.addAttribute("businessRequest", new BusinessRequest());
 		return "businesscard/update";
 	}
-	
+
 	/**
 	 * 名刺新規登録
 	 * @param userRequest リクエストデータ
@@ -70,7 +70,8 @@ public class BusinessController {
 	 * @return ユーザー情報一覧画面
 	 * */
 	@PostMapping("/businesscard/create")
-	public String bisinessCardCreate(@Validated @ModelAttribute BusinessRequest businessRequest, BindingResult result, Model model){
+	public String bisinessCardCreate(@Validated @ModelAttribute BusinessRequest businessRequest, BindingResult result,
+			Model model) {
 		if (result.hasErrors()) {
 			// 入力チェックエラーの場合
 			List<String> errorList = new ArrayList<String>();
@@ -78,7 +79,7 @@ public class BusinessController {
 				errorList.add(error.getDefaultMessage());
 			}
 			model.addAttribute("validationError", errorList);
-			
+
 			return "businesscard/create";
 		}
 
@@ -86,15 +87,15 @@ public class BusinessController {
 		businessService.userCreate(businessRequest); /** 登録処理 */
 		return "redirect:/businesscard/list";
 	}
-	
+
 	/**
-	 * 名刺新規登録
+	 * 名刺情報更新
 	 * @param userRequest リクエストデータ
 	 * @param model Model
-	 * @return ユーザー情報一覧画面
+	 * @return 名刺情報一覧画面
 	 * */
-	@PostMapping(value = "/businesscard/update", produces = "user/create;charset=UTF-8")
-	public String bisinessCardUpdate(@Validated @ModelAttribute @RequestParam("id") String updateId,BusinessRequest businessRequest, BindingResult result, Model model){
+	@PostMapping(value = "/businesscard/update", produces = "text/html")
+	public String bisinessCardUpdate(@Validated @ModelAttribute("businessRequest") BusinessRequest businessRequest, @RequestParam("updateId") Long updateId, BindingResult result, Model model) {
 		if (result.hasErrors()) {
 			// 入力チェックエラーの場合
 			List<String> errorList = new ArrayList<String>();
@@ -102,12 +103,35 @@ public class BusinessController {
 				errorList.add(error.getDefaultMessage());
 			}
 			model.addAttribute("validationError", errorList);
-			
+
 			return "businesscard/update";
 		}
 
-		// ユーザー登録情報
-		businessService.update(businessRequest, updateId); /** 変更処理 */
+		// 登録情報変更処理
+		businessService.update(businessRequest, updateId); 
+		return "redirect:/businesscard/list";
+	}
+
+	/**
+	 * 名刺情報削除
+	 * @param model Model
+	 * @return 名刺情報一覧画面
+	 * */
+	@GetMapping("/businesscard/delete")
+	public String displayDelete(@RequestParam("id") Integer updateId) {
+		businessService.delete(updateId);
+		return "businesscard/list";
+	}
+
+	/**
+	 * 名刺画像アップロード
+	 * @param model Model
+	 * @return 名刺情報一覧画面
+	 * */
+	@PostMapping("/businesscard/upload")
+	public String uploadFile(@RequestParam("id") Long updateId, @RequestParam("file") MultipartFile multipartFile,
+			Model model) {
+		businessService.upload(multipartFile, model, updateId);
 		return "redirect:/businesscard/list";
 	}
 }

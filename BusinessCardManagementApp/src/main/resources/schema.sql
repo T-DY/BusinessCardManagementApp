@@ -33,6 +33,6 @@ CREATE TABLE businesscard_list(
     user_email VARCHAR(256) NOT NULL,    -- メールアドレス（ログイン時に利用
     company VARCHAR(256) NOT NULL,    -- 社名
     business_name VARCHAR(128) NOT NULL,     -- 名刺の名前
-    card_image VARCHAR(256) NOT NULL,    -- カード画像情報
-    bookmark VARCHAR(256) NOT NULL   -- ブックマーク
+    card_image VARCHAR(256),    -- カード画像情報
+    bookmark VARCHAR(256)   -- ブックマーク
 )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
