@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>管理者ページ</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}">
+</head>
+<br>
+    <h1>管理者ページ</h1>
+    <p>ようこそ<span sec:authentication="principal.loginUser.name">管理者</span>さん</p>
+    <a sec:authorize-url="/user/create" href="create.html" th:href="@{/user/create}">新規登録へ</a></br>
+    <a sec:authorize-url="/user/list" href="list.html" th:href="@{/user/list}">登録者情報へ</a></br>
+    <a href="home.html" th:href="@{/}">トップページへ</a>
+    <form method="post" action="home.html" th:action="@{/logout}">
+        <button type="submit">ログアウト</button>
+    </form>
+</body>
+</html>
