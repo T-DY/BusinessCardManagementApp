@@ -1,0 +1,42 @@
+@charset "UTF-8";
+h1 {
+    background-color: darkseagreen;
+}
+
+.error {
+    color: red;
+}
+
+.card-image {
+	 width: 500px; /* 幅を適宜調整 */
+     height: 300px; /* 高さは自動調整 */
+     
+}
+
+.card-image-mini {
+	 width: 100px; /* 幅を適宜調整 */
+     height: 40px; /* 高さは自動調整 */
+}
+
+.view-list{
+	 display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+ }
+
+.view-list th {
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+.business-card td {
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+.table-header th{
+  position: sticky;
+  top: 0;
+  background-color: #fff;
+}
