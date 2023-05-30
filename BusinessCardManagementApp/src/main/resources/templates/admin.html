@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head
+	th:replace="common/head.html :: head_fragment(title = '管理者ページ', scripts = ~{::script}, links = ~{::link})">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>管理者ページ</title>
+<meta charset="UTF-8">
+<link rel="stylesheet" type="text/css" href="/static/css/style.css"
+	th:href="@{/static/css/style.css}">
+</head>
+<br>
+<h1>管理者ページ</h1>
+<p>
+	ようこそ<span sec:authentication="principal.loginUser.name">管理者</span>さん
+</p>
+<div  class="botton-position"><a sec:authorize-url="/user/create" href="create.html"
+		th:href="@{/user/create}" class="btn btn-primary">新規登録へ</a></div>
+<div  class="botton-position"><a sec:authorize-url="/user/list" href="list.html"
+		th:href="@{/user/list}" class="btn btn-primary">登録者情報へ</a></div>
+<div  class="botton-position"><a href="home.html" th:href="@{/}" class="btn btn-primary">トップページへ</a></div>
+<form method="post" action="home.html" th:action="@{/logout}">
+	<button type="submit" class="botton-position">ログアウト</button>
+</form>
+</body>
+</html>

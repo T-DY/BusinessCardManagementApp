@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security" >
+<head
+	th:replace="common/head.html :: head_fragment(title = '名刺新規登録', scripts = ~{::script}, links = ~{::link})">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" th:charset="UTF-8">
+</head>
+<body>
+	<div class="container">
+		<div th:if="${validationError}" th:each="error : ${validationError}">
+			<label class="text-danger" th:text="${error}"></label>
+		</div>
+		<h1>名刺新規登録</h1>
+		<form th:action="@{/businesscard/create}"
+	th:object="${businessRequest}" th:method="post" enctype="multipart/form-data" accept-charset="UTF-8">
+	
+	<a href="/businesscard/upload.html?id=-1" th:href="@{/businesscard/upload(id = -1, card-image = -1)}" class="btn btn-primary">画像をアップロード</a>
+	
+			<div class="form-group">
+				<label>社名：<span class="text-danger">※</span></label> <input
+					type="text" th:field="*{company}" class="form-control">
+			</div>
+			<div class="form-group">
+				<label>名前：<span class="text-danger">※</span></label> <input
+					type="text" th:field="*{businessName}" class="form-control">
+			</div>
+			<div class="form-group">
+				<label>ブックマーク：<span class="text-danger">※</span></label> <input
+					type="checkbox" th:field="*{bookmark}" >
+			</div>
+			<div class="form-group">
+				<label>画像情報：<span class="text-danger">※</span></label>
+				<div th:if="${cardImagePath != null}">
+					<img name="cardImage" class="card-image" th:src="${cardImagePath}"
+						alt="名刺画像" th:value="cardImagePath">
+				</div>
+			</div>
+			
+			<div class="form-group">
+				<input type="hidden" th:field="*{card_image}" class="form-control" th:value="${cardImage}" name="card_image">
+			</div>
+			<div class="text-center">
+				<a href="/businesscard/viewList" class="btn btn-secondary">キャンセル</a>
+				<input type="submit" value="登録" class="btn btn-primary">
+			</div>
+		</form>
+	</div>
+</body>
+</html>

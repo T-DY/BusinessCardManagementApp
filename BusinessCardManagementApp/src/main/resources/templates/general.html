@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head
+	th:replace="common/head.html :: head_fragment(title = '一般ユーザーページ', scripts = ~{::script}, links = ~{::link})">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<title>一般ユーザーページ</title>
+<meta charset="UTF-8">
+</head>
+
+<body>
+	<h1>一般ユーザーページ</h1>
+	<p>
+		ようこそ<span sec:authentication="principal.loginUser.name">一般</span>さん
+	</p>
+	<div class="botton-position">
+		<a sec:authorize-url="/businesscard/create" href="create.html"
+			th:href="@{/businesscard/create}" class="btn btn-primary">名刺新規登録へ</a>
+	</div>
+	<div class="botton-position">
+		<a sec:authorize-url="/businesscard/viewList" href="viewList.html"
+			th:href="@{/businesscard/viewList}" class="btn btn-primary">名刺リストへ</a>
+	</div>
+	<div class="botton-position">
+		<a sec:authorize-url="/businesscard/bookmarks" href="bookmarks.html"
+			th:href="@{/businesscard/bookmarks}" class="btn btn-primary">ブックマークリスト</a>
+	</div>
+	<div class="botton-position">
+		<a href="home.html" th:href="@{/}" class="btn btn-primary">トップページへ</a>
+	</div>
+	<form method="post" action="home.html" th:action="@{/logout}">
+		<button class="botton-position"　type="submit">ログアウト</button>
+	</form>
+</body>
+
+</html>

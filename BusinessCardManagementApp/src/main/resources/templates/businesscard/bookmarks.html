@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head
+	th:replace="common/head.html :: head_fragment(title = '名刺リスト', scripts = ~{::script}, links = ~{::link})">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8">
+<meta th:name="_csrf" th:content="${_csrf.token}" />
+<title>ブックマークリスト</title>
+</head>
+<body>
+	<h1>ブックマークリスト</h1>
+
+	<table class="view-list">
+		<tr class="table-header">
+			<th>会社名</th>
+			<th>名前</th>
+			<th>名刺画像</th>
+			<th>ブックマーク</th>
+			<th></th>
+			<th></th>
+			<th class="align-right"><a sec:authorize-url="/general"
+				href="general.html" th:href="@{/general}" class="btn btn-primary">一般ページへ</a>
+			</th>
+		</tr>
+
+		<tr th:each="businesscard : ${bookmarkList}"
+			th:object="${businesscard}" class="business-card"
+			th:attr="data-id=${businesscard.id}">
+			<td class="company" th:text="*{company}"></td>
+			<td class="business-name" th:text="*{businessName}"></td>
+			<td><img class="card-image" th:src="*{cardImage}" alt="名刺画像"></td>
+
+			<!-- ブックマークのチェックボックス
+			JavaScriptを使い動的にDBへ処理を走らせてブックマークのTrueとFalseを更新している。
+			 -->
+			<td class="bookmark"><input type="checkbox"
+				th:checked="${businesscard.bookmark}"
+				onchange="updateBookmark(this)"> <input type="hidden"
+				id="csrfToken" th:value="${_csrf.token}" /></td>
+			<td><a
+				th:href="@{/businesscard/update(id=${businesscard.id}, card-image=${businesscard.cardImage})}"
+				class="btn btn-primary">更新</a></td>
+			<td><a th:href="@{/businesscard/delete(id=${businesscard.id})}"
+				class="btn btn-primary">削除</a></td>
+		</tr>
+	</table>
+	<script src="../static/bookmark.js"></script>
+</body>
+</html>

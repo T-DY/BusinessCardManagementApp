@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+<head
+	th:replace="common/head.html :: head_fragment(title = '名刺登録情報一覧', scripts = ~{::script}, links = ~{::link})">
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" type="text/css" href="/static/css/style.css"
+	th:href="@{/static/css/style.css}">
+</head>
+<body>
+
+	<div th:if="${uploadId > 0}">
+		<img class="card-image" th:src="*{cardImagePath}" alt="名刺画像">
+		<form th:action="@{/businesscard/updateUpload}" method="post"
+			enctype="multipart/form-data">
+			<input type="hidden" name="uploadId" th:value="${uploadId}" /> <input
+				type="file" name="file" />
+			<button type="submit"><span class="text-danger">アップロードする</span></button>
+		</form>
+	</div>
+	
+	<div th:if="${uploadId < 0}">
+		<!-- IDが存在しない場合のボタン -->
+		<form th:action="@{/businesscard/createUpload}" method="post"
+				enctype="multipart/form-data">
+			<input type="hidden" name="uploadId" th:value="${uploadId}" /> <input
+				type="file" name="file" />
+			<button type="submit">アップロードする</button>
+		</form>
+	</div>
+
+</body>
+</html>

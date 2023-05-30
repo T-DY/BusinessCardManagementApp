@@ -1,0 +1,66 @@
+@charset "UTF-8";
+
+h1 {
+	background-color: darkseagreen;
+}
+
+.error {
+	color: red;
+}
+
+.botton-position {
+	margin-top: 20px;
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start; /* 左揃えに修正 */
+	align-items: center;
+}
+
+.card-image {
+	width: 500px; /* 幅を適宜調整 */
+	height: 300px; /* 高さは自動調整 */
+}
+
+.card-image-mini {
+	width: 100px; /* 幅を適宜調整 */
+	height: 40px; /* 高さは自動調整 */
+}
+
+.view-list {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+}
+
+.view-list th {
+	padding-left: 30px;
+	padding-right: 30px;
+}
+
+.business-card td {
+	padding-left: 30px;
+	padding-right: 30px;
+}
+
+.table-header th {
+	position: sticky;
+	top: 0;
+	background-color: #fff;
+}
+
+.table-header a {
+	align-items: center;
+}
+
+.company {
+	white-space: nowrap; /* テキストを折り返さずに表示 */
+	overflow: hidden; /* オーバーフローしたテキストを隠す */
+	text-overflow: ellipsis; /* オーバーフローしたテキストを省略記号で表示 */
+	max-width: 15em; /* 許容文字数を全角15文字に制限 */
+}
+
+.business-name {
+	white-space: normal; /* テキストを折り返して表示 */
+	word-wrap: break-word; /* 単語の途中でも折り返す */
+}
